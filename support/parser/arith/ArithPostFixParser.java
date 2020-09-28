@@ -11,6 +11,7 @@ import language.arith.MultOperator;
 import language.arith.NegateOperator;
 import language.arith.PlusOperator;
 import language.arith.SubOperator;
+import language.arith.ExponentOperator;
 import parser.PostFixParser;
 
 /**
@@ -105,6 +106,14 @@ public class ArithPostFixParser implements PostFixParser<Integer> {
         return new DivOperator();
       }
     });
+    
+    operators.put("^", new OperatorConstructor() {
+
+        @Override
+        public Operator<Integer> construct() {
+          return new ExponentOperator();
+        }
+      });
 
     operators.put("!", new OperatorConstructor() {
 
@@ -114,6 +123,7 @@ public class ArithPostFixParser implements PostFixParser<Integer> {
       }
     });
   }
+  
 
   private final String expr;
   private final Scanner tokenizer;

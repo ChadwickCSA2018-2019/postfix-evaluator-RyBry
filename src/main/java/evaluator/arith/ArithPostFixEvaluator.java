@@ -4,7 +4,6 @@ import evaluator.IllegalPostFixExpressionException;
 import evaluator.PostFixEvaluator;
 import language.Operand;
 import language.Operator;
-import language.arith.*;
 import parser.arith.ArithPostFixParser;
 import stack.StackInterface;
 import stack.LinkedStack;
@@ -22,7 +21,7 @@ public class ArithPostFixEvaluator implements PostFixEvaluator<Integer> {
 	 * Constructs an {@link ArithPostFixEvaluator}.
 	 */
 	public ArithPostFixEvaluator() {
-		this.stack = new LinkedStack<Operand<Integer>>(); //TODO Initialize to your LinkedStack
+		this.stack = new LinkedStack<Operand<Integer>>(); 
 	}
 
 	/**
@@ -40,6 +39,7 @@ public class ArithPostFixEvaluator implements PostFixEvaluator<Integer> {
 			case OPERATOR:
 				Operand<Integer> result = null;
 				Operator<Integer> operation = parser.nextOperator();
+				System.out.println("This is the operation: " + operation.getClass().toString());
 				if(operation.getNumberOfArguments() == 2) 
 				{
 					Operand<Integer> op1 = stack.pop();

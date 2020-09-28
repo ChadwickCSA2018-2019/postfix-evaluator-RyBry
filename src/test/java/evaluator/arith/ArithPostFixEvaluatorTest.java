@@ -75,6 +75,18 @@ public class ArithPostFixEvaluatorTest {
   public void testInvalidExpression() {
     evaluator.evaluate("1 2");
   }
+  
+  @Test (timeout = 5000)
+  public void testEvaluateExponent() {
+    Integer result = evaluator.evaluate("5 3 ^");
+    assertEquals(new Integer(125), result);
+    
+    result = evaluator.evaluate("12 0 ^");
+    assertEquals(new Integer(1), result);
+    
+    result = evaluator.evaluate("18 1 ^");
+    assertEquals(new Integer(18), result);
+  }
 
 
 }
