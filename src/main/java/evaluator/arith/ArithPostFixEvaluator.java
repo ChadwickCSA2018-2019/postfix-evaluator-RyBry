@@ -1,9 +1,13 @@
 package evaluator.arith;
 
+import evaluator.IllegalPostFixExpressionException;
 import evaluator.PostFixEvaluator;
 import language.Operand;
+import language.Operator;
+import language.arith.*;
 import parser.arith.ArithPostFixParser;
 import stack.StackInterface;
+import stack.LinkedStack;
 
 
 /**
@@ -12,40 +16,58 @@ import stack.StackInterface;
  */
 public class ArithPostFixEvaluator implements PostFixEvaluator<Integer> {
 
-  private final StackInterface<Operand<Integer>> stack;
+	private final StackInterface<Operand<Integer>> stack;
 
-  /**
-   * Constructs an {@link ArithPostFixEvaluator}.
-   */
-  public ArithPostFixEvaluator() {
-    this.stack = null; //TODO Initialize to your LinkedStack
-  }
+	/**
+	 * Constructs an {@link ArithPostFixEvaluator}.
+	 */
+	public ArithPostFixEvaluator() {
+		this.stack = new LinkedStack<Operand<Integer>>(); //TODO Initialize to your LinkedStack
+	}
 
-  /**
-   * Evaluates a postfix expression.
-   * @return the result 
-   */
-  @Override
-  public Integer evaluate(String expr) {
-    // TODO Use all of the things they've built so far to 
-    // create the algorithm to do post fix evaluation
-
-    ArithPostFixParser parser = new ArithPostFixParser(expr);
-    while (parser.hasNext()) {
-      switch (parser.nextType()) { 
-        case OPERAND:
-          //TODO What do we do when we see an operand?
-          break;
-        case OPERATOR:
-          //TODO What do we do when we see an operator?
-          break;
-        default:
-          //TODO If we get here, something went terribly wrong
-      }
-    }
-
-    //TODO What do we return?
-    return null;
-  }
+	/**
+	 * Evaluates a postfix expression.
+	 * @return the result 
+	 */
+	@Override
+	public Integer evaluate(String expr) {
+		ArithPostFixParser parser = new ArithPostFixParser(expr);
+		while (parser.hasNext()) {
+			switch (parser.nextType()) { 
+			case OPERAND:
+				stack.push(parser.nextOperand());
+				break;
+			case OPERATOR:
+				Operand<Integer> result = null;
+				Operator<Integer> operation = parser.nextOperator();
+				if(operation.getNumberOfArguments() == 2) 
+				{
+					Operand<Integer> op1 = stack.pop();
+					Operand<Integer> op0 = stack.pop();
+					operation.setOperand(0, op0);
+					operation.setOperand(1, op1);
+					result = operation.performOperation();
+				}
+				else 
+				{
+					Operand<Integer> op0 = stack.pop();
+					operation.setOperand(0, op0);
+					result = operation.performOperation();
+				}
+				stack.push(result);
+				System.out.println(result.getValue());
+				break;
+			default:
+				throw new IllegalPostFixExpressionException("An error has occurred");
+				//If we get here, something went terribly wrong
+			}
+		}
+		//If there is more than 1 element left in stack, The expression did not evaluate properly
+		if(stack.size() > 1) 
+		{
+			throw new IllegalPostFixExpressionException("The postfix expression may have been entered incorrectly");
+		}
+		return stack.pop().getValue();
+	}
 
 }
