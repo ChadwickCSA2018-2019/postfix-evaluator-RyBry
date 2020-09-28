@@ -1,7 +1,7 @@
 package language.arith;
 
 import language.Operand;
-import language.Operator;
+import language.BinaryOperator;
 
 /**
  * The {@link DivOperator} is an operator that performs division on two
@@ -9,55 +9,59 @@ import language.Operator;
  * @author jcollard, jddevaug
  *
  */
-public class DivOperator implements Operator<Integer> {
+public class DivOperator extends BinaryOperator<Integer> {
 
-  //TODO Before you get started, have you looked at the
-  // PlusOperator class? You'll notice that it is taking advantage
-  // of the abstract BinaryOperator class. Take a moment to
-  // also look at that class. Finally, you should implement
-  // this class.
-
-
-  /**
-   * {@inheritDoc}
-   */
-  @Override
-  public int getNumberOfArguments() {
-    //TODO Before you get started, have you looked at the
-    // PlusOperator class? You'll notice that it is taking advantage
-    // of the abstract BinaryOperator class. Take a moment to
-    // also look at that class. Finally, you should implement
-    // this class.
-
-    return 0;
-  }
-
-  /**
-   * {@inheritDoc}
-   */
-  @Override
-  public Operand<Integer> performOperation() {
-    //TODO Before you get started, have you looked at the
-    // PlusOperator class? You'll notice that it is taking advantage
-    // of the abstract BinaryOperator class. Take a moment to
-    // also look at that class. Finally, you should implement
-    // this class.
-
-    return null;
-  }
-
-  /**
-   * {@inheritDoc}
-   */
-  @Override
-  public void setOperand(int i, Operand<Integer> operand) {
-    //TODO Before you get started, have you looked at the
-    // PlusOperator class? You'll notice that it is taking advantage
-    // of the abstract BinaryOperator class. Take a moment to
-    // also look at that class. Finally, you should implement
-    // this class.
+	private Operand<Integer> op0;
+	private Operand<Integer> op1;
+	//TODO Before you get started, have you looked at the
+	// PlusOperator class? You'll notice that it is taking advantage
+	// of the abstract BinaryOperator class. Take a moment to
+	// also look at that class. Finally, you should implement
+	// this class.
 
 
-  }
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public Operand<Integer> performOperation() {
+		Operand<Integer> op0 = this.op0;
+		Operand<Integer> op1 = this.op1;
+		if(op0 == null || op1 == null) 
+		{
+			throw new IllegalStateException("Could not perform operation prior to operands being set.");
+		}
+		Integer result = (op0.getValue() / op1.getValue());
+		return new Operand<Integer>(result);
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public void setOperand(int i, Operand<Integer> operand) {
+		if (operand == null) {
+			throw new NullPointerException("Could not set null operand.");
+		}
+		if (i > 1) {
+			throw new IllegalArgumentException("Binary operator only accepts operands 0 and 1 "
+					+ "but recieved " + i + ".");
+		}
+		if (i == 0) {
+			if (op0 != null) {
+				throw new IllegalStateException("Position " + i + " has been previously set.");
+			}
+			op0 = operand;
+		} else {
+			if (op1 != null) {
+				throw new IllegalStateException("Position " + i + " has been previously set.");
+			}
+			if(operand.getValue() == 0) 
+			{
+				throw new IllegalStateException("Cannot Divide by 0");
+			}
+			op1 = operand;
+		}
+	}
 
 }
