@@ -5,14 +5,14 @@ public class Node<T> {
 	private Node<T> next;
 	private T element;
 	
-	//Empty constructor just to initialize Node
+	//Empty constructor to initialize Node
 	public Node()
 	{
 		next = null;
 		element = null;
 	}
 	
-	//Attaches the element to its reference Node upon object creation
+	//Attaches element to reference Node upon construction
 	public Node(T elem) 
 	{
 		next = null;
