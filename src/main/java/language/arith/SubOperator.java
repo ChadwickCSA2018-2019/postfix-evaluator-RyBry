@@ -9,11 +9,7 @@ import language.BinaryOperator;
  * @author jcollard, jddevaug
  *
  */
-//TODO Before you get started, have you looked at the
-// PlusOperator class? You'll notice that it is taking advantage
-// of the abstract BinaryOperator class. Take a moment to
-// also look at that class. Finally, you should implement
-// this class.
+
 public class SubOperator extends BinaryOperator<Integer> {
 
 	/**
