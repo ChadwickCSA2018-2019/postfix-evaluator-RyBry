@@ -39,7 +39,6 @@ public class ArithPostFixEvaluator implements PostFixEvaluator<Integer> {
 			case OPERATOR:
 				Operand<Integer> result = null;
 				Operator<Integer> operation = parser.nextOperator();
-				System.out.println("This is the operation: " + operation.getClass().toString());
 				if(operation.getNumberOfArguments() == 2) 
 				{
 					Operand<Integer> op1 = stack.pop();
@@ -55,7 +54,6 @@ public class ArithPostFixEvaluator implements PostFixEvaluator<Integer> {
 					result = operation.performOperation();
 				}
 				stack.push(result);
-				System.out.println(result.getValue());
 				break;
 			default:
 				throw new IllegalPostFixExpressionException("An error has occurred");

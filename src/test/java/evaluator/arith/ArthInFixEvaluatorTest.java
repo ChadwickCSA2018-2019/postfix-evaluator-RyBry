@@ -56,8 +56,8 @@ public class ArthInFixEvaluatorTest {
 		result = evaluator.evaluate("1 * 2 * 3");
 		assertEquals(new Integer(6), result);
 
-		result = evaluator.evaluate("1 * 2 * 3 * 4");
-		assertEquals(new Integer(24), result);
+		result = evaluator.evaluate("1 * 2 * 3 * -4");
+		assertEquals(new Integer(-24), result);
 	}
 
 	@Test (timeout = 5000, expected = IllegalPostFixExpressionException.class)
@@ -75,5 +75,5 @@ public class ArthInFixEvaluatorTest {
 
 		result = evaluator.evaluate("18 ^ 1");
 		assertEquals(new Integer(18), result);
-	}
+	}	
 }
