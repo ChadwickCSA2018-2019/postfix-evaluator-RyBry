@@ -38,4 +38,9 @@ public interface Operator<T> {
    */
   public void setOperand(int position, Operand<T> operand);
 
+  /**
+   * returns order of operations importance level
+   * @return
+   */
+  public int getImportance();
 }

@@ -57,5 +57,10 @@ public class DivOperator extends BinaryOperator<Integer> {
 			op1 = operand;
 		}
 	}
+	
+	public int getImportance() 
+	{
+		return 2;
+	}
 
 }

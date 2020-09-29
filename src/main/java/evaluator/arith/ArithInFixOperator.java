@@ -36,7 +36,7 @@ public class ArithInFixOperator implements PostFixEvaluator<Integer>{
 		{
 			return 3;
 		}
-		//there should always be an operator number returned
+		//there should always be an operator precedence number returned
 		throw new IllegalStateException("That shouldn't have happened.");
 	}
 
@@ -56,47 +56,71 @@ public class ArithInFixOperator implements PostFixEvaluator<Integer>{
 	public Integer evaluate(String expr) {
 		ArithPostFixParser parser = new ArithPostFixParser(expr);
 		while (parser.hasNext()) {
+			Operand<Integer> op0;
+			Operand<Integer> op1;
+			Operator<Integer> operation = null;
+			Operand<Integer> result = null;
 			switch (parser.nextType()) { 
 			case OPERAND:
-				operandStack.push(parser.nextOperand());
-				break;
-			case OPERATOR:
-				Operand<Integer> result = null;
-				Operator<Integer> operation = parser.nextOperator();
-				//If the current operation takes higher priority than the previous, put it on the stack
-				if(importance(operation) > importance(operatorStack.top())) 
+				Operand<Integer> scannedOperand = parser.nextOperand();
+				System.out.println("Pushing to stack operand: " + scannedOperand.getValue());
+				operandStack.push(scannedOperand);
+				//If there is nothing left in the expression, evaluate what is in the stacks
+				if(!parser.hasNext()) 
 				{
-					operatorStack.push(operation);
-				}
-				//TODO Probably shouldn't pop two elements from the stack, instead should read the next element if there is one,
-				//and if there isn't another one, then it should throw an exception
-				else if(operation.getNumberOfArguments() == 2) 
-				{
-					Operand<Integer> op1 = operandStack.pop();
-					Operand<Integer> op0 = operandStack.pop();
+					System.out.println("No more elements, evaluating what is left");
+					//If there is only one element left in the stack, return it before end of loop to prevent popping from an empty stack.
+					if(operandStack.size() == 1) 
+					{
+						return operandStack.pop().getValue();
+					}
+					//If there is more than 1 element left with no other operations, the expression did not evaluate properly
+					else if(operandStack.size() > 1 && !parser.hasNext() && operatorStack.isEmpty()) 
+					{
+						throw new IllegalPostFixExpressionException("The InFix expression may have been entered incorrectly");
+					}
+					operation = operatorStack.pop();
+					op1 = operandStack.pop();
+					op0 = operandStack.pop();
 					operation.setOperand(0, op0);
 					operation.setOperand(1, op1);
 					result = operation.performOperation();
+					System.out.println("Pushing to stack the result: " + result.getValue());
+					operandStack.push(result);
 				}
+				break;
+			case OPERATOR:
+				Operator<Integer> scannedOperator = parser.nextOperator();
+				System.out.println("Found operator");
+				//If the current operation takes higher priority than the previous, put it on the stack
+				System.out.println("Checking importance");
+				if(operatorStack.isEmpty() || scannedOperator.getImportance() > operatorStack.top().getImportance()) 
+				{
+					operatorStack.push(scannedOperator);
+					System.out.println("Took higher importance; Pushing to Stack --- Breaking Loop");
+				}
+				//TODO Run this with a (1 + 1)
 				else 
 				{
-					Operand<Integer> op0 = operandStack.pop();
+					System.out.println("Took lower importance; Popping from Stack and evaluating");
+					operation = operatorStack.pop();
+					op1 = operandStack.pop();
+					op0 = operandStack.pop();
 					operation.setOperand(0, op0);
+					operation.setOperand(1, op1);
 					result = operation.performOperation();
+					System.out.println("Pushing to stack the result: " + result.getValue());
+					operandStack.push(result);
+					//Then push the other operation onto the stack so it isn't lost in computer space :D
+					operatorStack.push(scannedOperator);
 				}
-				operandStack.push(result);
-				System.out.println(result.getValue());
 				break;
 			default:
 				throw new IllegalPostFixExpressionException("An error has occurred");
 				//If we get here, something went terribly wrong
 			}
 		}
-		//If there is more than 1 element left in stack, The expression did not evaluate properly
-		if(operandStack.size() > 1) 
-		{
-			throw new IllegalPostFixExpressionException("The postfix expression may have been entered incorrectly");
-		}
+		System.out.println("****************************************");
 		return operandStack.pop().getValue();
 	}
 

@@ -65,7 +65,7 @@ public class ArithPostFixEvaluator implements PostFixEvaluator<Integer> {
 		//If there is more than 1 element left in stack, The expression did not evaluate properly
 		if(stack.size() > 1) 
 		{
-			throw new IllegalPostFixExpressionException("The postfix expression may have been entered incorrectly");
+			throw new IllegalPostFixExpressionException("The PostFix expression may have been entered incorrectly");
 		}
 		return stack.pop().getValue();
 	}

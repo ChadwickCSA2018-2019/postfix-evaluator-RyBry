@@ -1,4 +1,5 @@
 package language;
+import language.arith.*;
 
 /**
  * A {@link BinaryOperator} is an {@link Operator} that performs an

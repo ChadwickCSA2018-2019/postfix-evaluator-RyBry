@@ -26,5 +26,9 @@ public class MultOperator extends BinaryOperator<Integer> {
 		return new Operand<Integer>(result);
 	}
 
+	public int getImportance() 
+	{
+		return 2;
+	}
 
 }

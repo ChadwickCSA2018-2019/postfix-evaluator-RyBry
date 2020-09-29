@@ -88,5 +88,4 @@ public class ArithPostFixEvaluatorTest {
     assertEquals(new Integer(18), result);
   }
 
-
 }

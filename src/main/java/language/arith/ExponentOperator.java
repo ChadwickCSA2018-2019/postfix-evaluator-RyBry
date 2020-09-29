@@ -19,4 +19,9 @@ public class ExponentOperator extends BinaryOperator<Integer>{
 			Integer result = (int)Math.pow(op0.getValue(), op1.getValue());
 			return new Operand<Integer>(result);
 		}
+	  
+		public int getImportance() 
+		{
+			return 3;
+		}
 }
