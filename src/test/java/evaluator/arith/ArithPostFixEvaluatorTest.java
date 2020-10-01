@@ -17,13 +17,13 @@ public class ArithPostFixEvaluatorTest {
     evaluator = new ArithPostFixEvaluator();
   }
 
-  @Test (timeout = 5000)
+  @Test(timeout = 5000)
   public void testEvaluateSimple() {
     Integer result = evaluator.evaluate("1");
     assertEquals(new Integer(1), result);
   }
 
-  @Test (timeout = 5000)
+  @Test(timeout = 5000)
   public void testEvaluatePlus() {
     Integer result = evaluator.evaluate("1 2 +");
     assertEquals(new Integer(3), result);
@@ -35,7 +35,7 @@ public class ArithPostFixEvaluatorTest {
     assertEquals(new Integer(11111), result);
   }
 
-  @Test (timeout = 5000)
+  @Test(timeout = 5000)
   public void testEvaluateSub() {
     Integer result = evaluator.evaluate("1 2 -");
     assertEquals(new Integer(-1), result);
@@ -47,7 +47,7 @@ public class ArithPostFixEvaluatorTest {
     assertEquals(new Integer(909), result);
   }
 
-  @Test (timeout = 5000)
+  @Test(timeout = 5000)
   public void testEvaluateMult() {
     Integer result = evaluator.evaluate("1 2 *");
     assertEquals(new Integer(2), result);
@@ -59,7 +59,7 @@ public class ArithPostFixEvaluatorTest {
     assertEquals(new Integer(24), result);
   }
 
-  @Test (timeout = 5000)
+  @Test(timeout = 5000)
   public void testEvaluateNegate() {
     Integer result = evaluator.evaluate("1 !");
     assertEquals(new Integer(-1), result);
@@ -71,19 +71,19 @@ public class ArithPostFixEvaluatorTest {
     assertEquals(new Integer(15), result);
   }
 
-  @Test (timeout = 5000, expected = IllegalPostFixExpressionException.class)
+  @Test(timeout = 5000, expected = IllegalPostFixExpressionException.class)
   public void testInvalidExpression() {
     evaluator.evaluate("1 2");
   }
-  
-  @Test (timeout = 5000)
+
+  @Test(timeout = 5000)
   public void testEvaluateExponent() {
     Integer result = evaluator.evaluate("5 3 ^");
     assertEquals(new Integer(125), result);
-    
+
     result = evaluator.evaluate("12 0 ^");
     assertEquals(new Integer(1), result);
-    
+
     result = evaluator.evaluate("18 1 ^");
     assertEquals(new Integer(18), result);
   }

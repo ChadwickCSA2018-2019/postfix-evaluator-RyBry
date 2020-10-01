@@ -3,7 +3,6 @@ package language.arith;
 import language.BinaryOperator;
 import language.Operand;
 
-
 /**
  * The {@code PlusOperator} is an operator that performs addition on two
  * integers.
@@ -13,7 +12,7 @@ import language.Operand;
 public class PlusOperator extends BinaryOperator<Integer> {
 
   /**
-   * {@inheritDoc}.
+   * {@RyBry}.
    */
   @Override
   public Operand<Integer> performOperation() {
@@ -25,10 +24,9 @@ public class PlusOperator extends BinaryOperator<Integer> {
     Integer result = op0.getValue() + op1.getValue();
     return new Operand<Integer>(result);
   }
-  
-	public int getImportance() 
-	{
-		return 1;
-	}
+
+  public int getImportance() {
+    return 1;
+  }
 
 }

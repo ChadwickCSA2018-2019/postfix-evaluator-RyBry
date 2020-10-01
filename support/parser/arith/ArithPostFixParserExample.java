@@ -5,9 +5,13 @@ import language.Operator;
 import parser.PostFixParser;
 import parser.PostFixParser.Type;
 
+/**
+ * An example of a PostFixParser Implementation.
+ * @author jddevaug
+ *
+ */
 public class ArithPostFixParserExample {
 
-  
   /**
    * Main method.
    * @param args - command line arguments passed into class

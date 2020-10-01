@@ -1,18 +1,21 @@
 package language;
-import language.arith.*;
 
 /**
  * A {@link BinaryOperator} is an {@link Operator} that performs an
  * operation on two arguments.
  * @author jcollard, jddevaug
  *
- * @param <T> they type of the {@link Operand} being evaluated
+ * @param <T> the type of the {@link Operand} being evaluated
  */
 public abstract class BinaryOperator<T> implements Operator<T> {
-
+  /**
+   * Holds the value of the first (left of the expression) operand.
+   */
   private Operand<T> op0;
+  /**
+   * Holds the value of the Second (right of the expression) operand.
+   */
   private Operand<T> op1;
-
   /**
    * Returns the number of arguments.
    * @ return 2
@@ -32,7 +35,7 @@ public abstract class BinaryOperator<T> implements Operator<T> {
     }
     if (i > 1) {
       throw new IllegalArgumentException("Binary operator only accepts operands 0 and 1 "
-                                          + "but recieved " + i + ".");
+          + "but recieved " + i + ".");
     }
     if (i == 0) {
       if (op0 != null) {

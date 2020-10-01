@@ -8,6 +8,9 @@ package language;
  */
 public class Operand<T> {
 
+  /**
+   * Will hold value of T.
+   */
   private final T value;
 
   /**
